@@ -1,0 +1,409 @@
+/* Page-specific mobile presentation for immersive scenes. */
+
+html.mobile-h5.mobile-page-009 body {
+  background:
+    radial-gradient(circle at 14% 5%, rgba(59, 130, 246, 0.24), transparent 34%),
+    radial-gradient(circle at 88% 90%, rgba(14, 165, 233, 0.16), transparent 32%),
+    linear-gradient(165deg, #eff6ff 0%, #f8fafc 48%, #eef2ff 100%);
+}
+
+html.mobile-h5.mobile-page-010 body {
+  background: linear-gradient(150deg, #dbeafe 0%, #e2e8f0 42%, #ede9fe 100%);
+}
+
+html.mobile-h5.mobile-page-011 body {
+  background: #020b1d;
+  color: #dbeafe;
+}
+
+html.mobile-h5.mobile-page-013 body,
+html.mobile-h5.mobile-page-015 body {
+  background:
+    radial-gradient(circle at 50% -10%, rgba(16, 185, 129, 0.12), transparent 32%),
+    #020617;
+  color: #f1f5f9;
+}
+
+html.mobile-h5.mobile-page-014 body {
+  background: #000;
+  color: #f1f5f9;
+}
+
+@media (max-width: 767px) {
+  /* Cloud login */
+  html.mobile-h5.mobile-page-009 main {
+    min-height: 100dvh;
+    align-items: stretch;
+    padding: max(18px, env(safe-area-inset-top)) 14px max(18px, env(safe-area-inset-bottom));
+  }
+
+  html.mobile-h5.mobile-page-009 main > section {
+    position: relative;
+    align-self: center;
+    overflow: hidden;
+    padding: 26px 20px 22px !important;
+    border: 1px solid rgba(59, 130, 246, 0.18) !important;
+    border-radius: 26px !important;
+    background: rgba(255, 255, 255, 0.92) !important;
+    box-shadow: 0 24px 70px rgba(30, 64, 175, 0.16) !important;
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+  }
+
+  html.mobile-h5.mobile-page-009 main > section::before {
+    display: grid;
+    width: 48px;
+    height: 48px;
+    margin-bottom: 18px;
+    place-items: center;
+    border-radius: 16px;
+    background: linear-gradient(145deg, #2563eb, #38bdf8);
+    box-shadow: 0 12px 26px rgba(37, 99, 235, 0.26);
+    color: #fff;
+    content: "W";
+    font-size: 22px;
+    font-weight: 850;
+  }
+
+  html.mobile-h5.mobile-page-009 h1,
+  html.mobile-h5.mobile-page-009 h2 {
+    font-size: 28px;
+    letter-spacing: -0.03em;
+  }
+
+  html.mobile-h5.mobile-page-009 input,
+  html.mobile-h5.mobile-page-009 select {
+    height: 48px !important;
+    border-color: rgba(148, 163, 184, 0.32) !important;
+    border-radius: 14px !important;
+    background: #f8fafc;
+  }
+
+  html.mobile-h5.mobile-page-009 button {
+    min-height: 48px;
+    border-radius: 14px !important;
+  }
+
+  /* Cloud notes */
+  html.mobile-h5.mobile-page-010 body {
+    overflow: hidden;
+  }
+
+  html.mobile-h5.mobile-page-010 main {
+    height: 100dvh;
+    padding: max(8px, env(safe-area-inset-top)) 8px max(8px, env(safe-area-inset-bottom));
+  }
+
+  html.mobile-h5.mobile-page-010 main > div {
+    border-color: rgba(148, 163, 184, 0.28) !important;
+    border-radius: 22px !important;
+    box-shadow: 0 20px 55px rgba(30, 41, 59, 0.16) !important;
+  }
+
+  html.mobile-h5.mobile-page-010 main > div > section {
+    max-height: 45dvh !important;
+    border-bottom-color: rgba(148, 163, 184, 0.24) !important;
+    background: rgba(255, 255, 255, 0.96);
+  }
+
+  html.mobile-h5.mobile-page-010 main > div > section header {
+    padding: 14px;
+  }
+
+  html.mobile-h5.mobile-page-010 main > div > section h2 {
+    font-size: 23px;
+  }
+
+  html.mobile-h5.mobile-page-010 #searchDiaryInput {
+    height: 46px;
+    border-radius: 14px;
+    font-size: 16px;
+  }
+
+  html.mobile-h5.mobile-page-010 #diaryList {
+    padding: 10px 10px 18px;
+  }
+
+  html.mobile-h5.mobile-page-010 #diaryList button {
+    min-height: 48px;
+    border-radius: 14px;
+  }
+
+  html.mobile-h5.mobile-page-010 main > div > article > div:first-child {
+    min-height: 46px;
+    padding: 10px 14px;
+  }
+
+  html.mobile-h5.mobile-page-010 #detailPanel {
+    padding: 18px 16px 28px !important;
+  }
+
+  html.mobile-h5.mobile-page-010 #detailTitle {
+    font-size: 22px;
+  }
+
+  /* Juxiang partner site */
+  html.mobile-h5.mobile-page-011 body > div {
+    padding: max(18px, env(safe-area-inset-top)) 16px max(28px, env(safe-area-inset-bottom));
+  }
+
+  html.mobile-h5.mobile-page-011 header {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    margin: -18px -16px 0;
+    padding: max(14px, env(safe-area-inset-top)) 16px 13px;
+    border-bottom-color: rgba(34, 211, 238, 0.16) !important;
+    background: rgba(2, 11, 29, 0.86);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+  }
+
+  html.mobile-h5.mobile-page-011 header > a {
+    max-width: 68%;
+    overflow: hidden;
+    font-size: 13px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  html.mobile-h5.mobile-page-011 header button {
+    min-width: 48px;
+    min-height: 40px;
+    border-radius: 12px;
+  }
+
+  html.mobile-h5.mobile-page-011 #about {
+    padding: 48px 0 28px;
+  }
+
+  html.mobile-h5.mobile-page-011 #about h1 {
+    margin-top: 18px;
+    font-size: clamp(35px, 10vw, 48px);
+    line-height: 1.08;
+    letter-spacing: -0.04em;
+  }
+
+  html.mobile-h5.mobile-page-011 #about > div.mt-8 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  html.mobile-h5.mobile-page-011 #about > div.mt-8 button {
+    min-height: 48px;
+    padding: 10px 12px;
+    border-radius: 14px;
+  }
+
+  html.mobile-h5.mobile-page-011 #about > div.mt-12 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  html.mobile-h5.mobile-page-011 #about > div.mt-12 > div,
+  html.mobile-h5.mobile-page-011 section article,
+  html.mobile-h5.mobile-page-011 section aside {
+    border-radius: 16px !important;
+    background: rgba(15, 23, 42, 0.7) !important;
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.16);
+  }
+
+  html.mobile-h5.mobile-page-011 section {
+    padding: 30px 0;
+  }
+
+  html.mobile-h5.mobile-page-011 section h2 {
+    font-size: 22px;
+  }
+
+  /* Zhang Chi virtual desktop puzzle */
+  html.mobile-h5.mobile-page-012 #downloadTrayButton {
+    right: 12px !important;
+    bottom: calc(var(--mobile-nav-height) + env(safe-area-inset-bottom) + 20px) !important;
+    left: 12px;
+    min-height: 48px;
+    justify-content: center;
+    border-radius: 16px;
+    box-shadow: 0 16px 36px rgba(16, 185, 129, 0.2);
+  }
+
+  html.mobile-h5.mobile-page-012 #virtualExplorerModal > div {
+    max-height: calc(100dvh - 18px);
+    border-radius: 26px 26px 0 0 !important;
+  }
+
+  html.mobile-h5.mobile-page-012 #virtualExplorerModal {
+    z-index: 130 !important;
+  }
+
+  html.mobile-h5.mobile-page-012 #audioRecordModal {
+    z-index: 150 !important;
+  }
+
+  html.mobile-h5.mobile-page-012 #virtualExplorerModal:not(.hidden) ~ .mobile-bottom-nav,
+  html.mobile-h5.mobile-page-012 #audioRecordModal:not(.hidden) ~ .mobile-bottom-nav {
+    display: none !important;
+  }
+
+  html.mobile-h5.mobile-page-012 #virtualFileEntry {
+    padding: 14px;
+    border-radius: 16px;
+    cursor: pointer;
+  }
+
+  html.mobile-h5.mobile-page-012 #virtualFileEntry > div:first-child {
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  html.mobile-h5.mobile-page-012 #virtualFileName {
+    overflow-wrap: anywhere;
+  }
+
+  html.mobile-h5.mobile-page-012 #viewFileButton,
+  html.mobile-h5.mobile-page-012 #extractZipButton,
+  html.mobile-h5.mobile-page-012 #renameConfirmButton,
+  html.mobile-h5.mobile-page-012 #renameCancelButton {
+    min-height: 44px;
+  }
+
+  html.mobile-h5.mobile-page-012 #renameEditor {
+    flex-wrap: wrap;
+  }
+
+  html.mobile-h5.mobile-page-012 #renameInput {
+    flex: 1 0 100%;
+    height: 48px;
+    border-radius: 12px;
+    font-size: 16px;
+  }
+
+  html.mobile-h5.mobile-page-012 #fileContextMenu.mobile-file-actions {
+    position: fixed !important;
+    right: max(12px, env(safe-area-inset-right)) !important;
+    bottom: max(12px, env(safe-area-inset-bottom)) !important;
+    left: max(12px, env(safe-area-inset-left)) !important;
+    top: auto !important;
+    z-index: 140;
+    overflow: hidden;
+    padding: 8px;
+    border-radius: 22px;
+    box-shadow: 0 24px 70px rgba(15, 23, 42, 0.32);
+  }
+
+  html.mobile-h5.mobile-page-012 #fileContextMenu.mobile-file-actions::before {
+    display: block;
+    padding: 8px 10px 10px;
+    color: #64748b;
+    content: "文件操作";
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+  }
+
+  html.mobile-h5.mobile-page-012 #fileContextMenu button {
+    min-height: 48px;
+    border-radius: 13px;
+    font-size: 14px;
+  }
+
+  html.mobile-h5.mobile-page-012 #audioRecordModal > div {
+    max-height: calc(100dvh - 18px);
+    border-radius: 26px 26px 0 0 !important;
+  }
+
+  html.mobile-h5.mobile-page-012 #audioTranscriptBox {
+    height: min(38dvh, 280px);
+  }
+
+  /* Endings */
+  html.mobile-h5.mobile-page-013 main,
+  html.mobile-h5.mobile-page-015 main {
+    padding-right: 12px !important;
+    padding-left: 12px !important;
+    padding-bottom: max(32px, env(safe-area-inset-bottom)) !important;
+    padding-top: max(20px, env(safe-area-inset-top)) !important;
+  }
+
+  html.mobile-h5.mobile-page-013 main > div,
+  html.mobile-h5.mobile-page-015 main > section {
+    padding: 22px 18px !important;
+    border-color: rgba(71, 85, 105, 0.72) !important;
+    border-radius: 24px !important;
+    background: rgba(15, 23, 42, 0.86) !important;
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.32) !important;
+  }
+
+  html.mobile-h5.mobile-page-013 h1 {
+    font-size: 30px;
+    line-height: 1.16;
+  }
+
+  html.mobile-h5.mobile-page-013 #skipTypingButton {
+    min-height: 42px;
+    margin-top: 16px;
+    padding: 8px 12px;
+    border: 1px solid rgba(100, 116, 139, 0.58);
+    border-radius: 12px;
+    color: #cbd5e1;
+    font-size: 12px;
+  }
+
+  html.mobile-h5.mobile-page-013 #actionRow a {
+    min-height: 50px;
+    align-items: center;
+    border-radius: 14px;
+  }
+
+  html.mobile-h5.mobile-page-015 .quiz-q > div {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  html.mobile-h5.mobile-page-015 .quiz-choice {
+    min-height: 48px;
+    border-radius: 14px;
+  }
+
+  html.mobile-h5.mobile-page-015 #killerAnswer,
+  html.mobile-h5.mobile-page-015 #fillContinueBtn {
+    min-height: 48px;
+    border-radius: 14px;
+  }
+
+  html.mobile-h5.mobile-page-015 #replayLink {
+    min-height: 46px;
+    align-items: center;
+    padding-right: 18px;
+    padding-left: 18px;
+    border-radius: 14px;
+  }
+
+  html.mobile-h5.mobile-page-015 #skipOutroButton {
+    min-height: 42px;
+    border-radius: 12px;
+  }
+
+  /* Deep archive */
+  html.mobile-h5.mobile-page-014 .e2-search-input {
+    min-height: 48px;
+    font-size: 16px;
+  }
+
+  html.mobile-h5.mobile-page-014 .e2-archive-inner {
+    padding-right: 12px;
+    padding-left: 12px;
+  }
+
+  html.mobile-h5.mobile-page-014 .e2-archive-list button,
+  html.mobile-h5.mobile-page-014 .e2-archive-home,
+  html.mobile-h5.mobile-page-014 .e2-preview-close {
+    min-height: 44px;
+  }
+
+  html.mobile-h5.mobile-page-014 .e2-preview-panel {
+    width: calc(100% - 16px);
+    max-height: calc(100dvh - 16px);
+    border-radius: 20px;
+  }
+}
