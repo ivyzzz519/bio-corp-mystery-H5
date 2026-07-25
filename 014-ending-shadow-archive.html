@@ -55,6 +55,14 @@
         class="e2-term-lines"
       ></div>
       <div id="passwordBlock" class="e2-pw-block hidden">
+        <button
+          id="accessRecordToggle"
+          type="button"
+          class="e2-access-record-toggle"
+          aria-expanded="false"
+          aria-controls="accessRecord"
+        >[查看原始访问记录]</button>
+        <pre id="accessRecord" class="e2-access-record hidden" aria-live="polite"></pre>
         <div class="e2-pw-prompt-row">
           <span id="passwordPromptLabel" class="e2-pw-prompt hidden">&gt; Please input Administrator Password:</span>
         </div>
@@ -194,6 +202,8 @@
         var adminInput = document.getElementById("adminPasswordInput");
         var passwordEcho = document.getElementById("passwordEcho");
         var passwordFeedback = document.getElementById("passwordFeedback");
+        var accessRecordToggle = document.getElementById("accessRecordToggle");
+        var accessRecord = document.getElementById("accessRecord");
         var grantedBlock = document.getElementById("grantedBlock");
         var grantWait = document.getElementById("grantWait");
         var archiveLayer = document.getElementById("archiveLayer");
@@ -377,6 +387,28 @@
               "接收方： 境外指定个人账户（ZHQ19768792）。\n\n"
           },
           {
+            id: "it-513890",
+            label: "IT-513890",
+            defaultVisible: false,
+            keywords: [
+              "it",
+              "513890",
+              "it-513890",
+              "信息技术",
+              "删除",
+              "备份",
+              "b-09",
+              "影子节点"
+            ],
+            bodyText:
+              "【IT-513890】异常删除与备份日志（节选）\n\n" +
+              "操作账号： ARC-120627\n\n" +
+              "目标数据： B-09批次人员名单、原材料接收记录及相关监控快照。\n\n" +
+              "执行状态： 主服务器数据已删除，审批编号为空。\n\n" +
+              "备份状态： 异地容灾链路中断，删除指令未同步至影子节点，历史快照仍可恢复。\n\n" +
+              "IT备注： 已接到口头通知，不得恢复上述数据。"
+          },
+          {
             id: "00-readme",
             label: "00-readme",
             defaultVisible: false,
@@ -390,6 +422,8 @@
           "> 正在绕过本地防火墙...",
           "> 正在唤醒 【无限生物科技有限公司_容灾备份影子节点】... [连接成功]",
           "> 警告：您正在访问未备案的深层数据。",
+          "> 检测到异常跳转参数。",
+          "> 部分访问凭证可能被移动端浏览器折叠。",
           "> Root Directory Access Denied."
         ];
         var passwordPromptLabel = document.getElementById("passwordPromptLabel");
@@ -741,6 +775,22 @@
           }
           adminInput.focus();
         });
+
+        if (accessRecordToggle && accessRecord) {
+          accessRecordToggle.addEventListener("click", function (event) {
+            event.stopPropagation();
+            var willOpen = accessRecord.classList.contains("hidden");
+            accessRecord.classList.toggle("hidden", !willOpen);
+            accessRecordToggle.setAttribute("aria-expanded", String(willOpen));
+            accessRecordToggle.textContent = willOpen
+              ? "[收起原始访问记录]"
+              : "[查看原始访问记录]";
+            if (willOpen) {
+              accessRecord.textContent =
+                "> REQUEST: https://archive.wuxianshengwu.com/root-access#password=" + CORRECT;
+            }
+          });
+        }
 
         adminInput.addEventListener("input", function () {
           passwordEcho.textContent = adminInput.value;

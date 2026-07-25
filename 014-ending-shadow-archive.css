@@ -344,6 +344,37 @@ body {
   max-width: 56rem;
 }
 
+.e2-access-record-toggle {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  border: 1px solid rgb(74 222 128 / 0.45);
+  border-radius: 0.25rem;
+  background: rgb(20 83 45 / 0.2);
+  padding: 0.625rem 0.75rem;
+  color: #86efac;
+  font: inherit;
+  cursor: pointer;
+}
+
+.e2-access-record-toggle:hover,
+.e2-access-record-toggle:focus-visible {
+  border-color: rgb(74 222 128 / 0.85);
+  background: rgb(20 83 45 / 0.38);
+  outline: none;
+}
+
+.e2-access-record {
+  margin: 0.75rem 0 1rem;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+  word-break: break-all;
+  color: rgb(134 239 172 / 0.85);
+  font: inherit;
+  line-height: 1.625;
+}
+
 .e2-pw-prompt-row {
   margin-top: 0.25rem;
   display: flex;
