@@ -71,7 +71,7 @@
           title: "日记3",
           date: "2021年4月5日",
           content: [
-            "原来在做地下代孕，这就是秘密。。。。。",
+            "原来在做地下代孕，这就是秘密……",
             "我在<strong>A城日报</strong>里发现一些不得了的东西",
             "和小敏电话，让她不要好奇女厕所那些小广告。",
             "哎，合同期满我就要离职。"
@@ -82,7 +82,7 @@
           date: "2023年12月3日",
           content: [
             "好久没写日记了。",
-            "常常觉得自己身处地是屠宰场，从同类的身体里摘除一些会哭的血肉。",
+            "常常觉得自己身处的是屠宰场，从同类的身体里摘除一些会哭的血肉。",
             "说是自愿来的，但她们根本不知道代价！打进身体里的针有三十多厘米，为了保证效果，往往会过度促排 + 频繁取卵，出问题会没命的！",
             "上班时遇到一个年龄很小的女孩，问我生物公司怎么走，我说那是诈骗公司，所谓的高薪是骗局。只能帮她到这里了。",
             "被张弛路过看到，他把我痛骂一顿，还说下次遇到要扣我工资。",
@@ -151,9 +151,9 @@
         {
           title: "加密笔记 1",
           date: "已锁定",
-          readTriggers: ["arc-120627", "arc120627", "张弛", "后台", "后台密码"],
+          readTriggers: ["arc-120627", "arc120627", "张弛", "后台", "后台密码", "密码"],
           content: [
-            "password:120627 92TWSL66",
+            "password: 92TWSL66",
             "名单上申请代孕的人，甚至都不是直接提供精子的人，赵某究竟是谁，难道这是“贿赂”？"
           ]
         },
@@ -290,8 +290,6 @@
             "</span></button></li>"
           );
         });
-        const scrollSpacer =
-          '<li aria-hidden="true" class="pointer-events-none min-h-[min(48vh,18rem)] shrink-0 list-none"></li>';
         const lockRows = visibleLocked.map((item, lockIdx) => {
           const isActive = item.title === activeDiaryTitle;
           const stillLocked = !lockedDiaryUnlockedForUi(item, normalized);
@@ -320,7 +318,7 @@
           );
         });
 
-        diaryList.innerHTML = baseRows.join("") + scrollSpacer + lockRows.join("");
+        diaryList.innerHTML = baseRows.join("") + lockRows.join("");
 
         emptyDiaryHint.classList.toggle("hidden", renderedDiaries.length > 0);
 
@@ -343,6 +341,59 @@
 
       searchDiaryInput.addEventListener("input", () => {
         renderDiaryList(searchDiaryInput.value);
+      });
+
+      const imageLightbox = document.createElement("div");
+      imageLightbox.id = "noteImageLightbox";
+      imageLightbox.className =
+        "fixed inset-0 z-[160] hidden items-center justify-center bg-slate-950/90 p-4";
+      imageLightbox.setAttribute("role", "dialog");
+      imageLightbox.setAttribute("aria-modal", "true");
+      imageLightbox.setAttribute("aria-label", "图片预览");
+      imageLightbox.innerHTML = `
+        <button type="button" class="absolute right-4 top-4 rounded-full bg-white/15 px-4 py-2 text-sm text-white hover:bg-white/25" aria-label="关闭图片预览">关闭</button>
+        <img class="max-h-[88vh] max-w-[96vw] rounded-lg object-contain shadow-2xl" alt="" />
+      `;
+      document.body.appendChild(imageLightbox);
+
+      const lightboxImage = imageLightbox.querySelector("img");
+      const lightboxCloseButton = imageLightbox.querySelector("button");
+
+      function closeImageLightbox() {
+        imageLightbox.classList.add("hidden");
+        imageLightbox.classList.remove("flex");
+        lightboxImage.removeAttribute("src");
+      }
+
+      detailBody.addEventListener("click", (event) => {
+        const image = event.target.closest("img");
+        if (!image || !detailBody.contains(image)) {
+          return;
+        }
+        lightboxImage.src = image.currentSrc || image.src;
+        lightboxImage.alt = image.alt || "日记图片放大预览";
+        imageLightbox.classList.remove("hidden");
+        imageLightbox.classList.add("flex");
+      });
+
+      detailBody.addEventListener("mouseover", (event) => {
+        const image = event.target.closest("img");
+        if (image && detailBody.contains(image)) {
+          image.style.cursor = "zoom-in";
+          image.title = "点击放大查看";
+        }
+      });
+
+      lightboxCloseButton.addEventListener("click", closeImageLightbox);
+      imageLightbox.addEventListener("click", (event) => {
+        if (event.target === imageLightbox) {
+          closeImageLightbox();
+        }
+      });
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && !imageLightbox.classList.contains("hidden")) {
+          closeImageLightbox();
+        }
       });
 
       diaryCount.textContent = diaries.length + " 篇笔记";

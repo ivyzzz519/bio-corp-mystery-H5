@@ -173,7 +173,7 @@ const gameData = {
       blocks: [
         {
           type: "paragraph",
-          text: "本报讯（记者 综合稿）昨日，O市市长<strong>常高</strong>一行深入高新区，对省级重点项目——无限生物科技有限公司进行实地调研。西川电子总经理<strong>周照</strong>作为战略合作伙伴代表全程陪同。"
+          text: "本报讯（记者 综合稿）昨日，Y市市长<strong>常高</strong>一行深入高新区，对省级重点项目——无限生物科技有限公司进行实地调研。西川电子总经理<strong>周照</strong>作为战略合作伙伴代表全程陪同。"
         },
         {
           type: "image",

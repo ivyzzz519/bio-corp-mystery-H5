@@ -31,7 +31,9 @@
       return;
     }
     sessionStorage.setItem(deskKey, desk);
-    localStorage.setItem(legacyUserKey, desk);
+    if (localStorage.getItem(legacyUserKey) !== "logged_out") {
+      localStorage.setItem(legacyUserKey, desk);
+    }
   }
 
   function getActiveDesk() {

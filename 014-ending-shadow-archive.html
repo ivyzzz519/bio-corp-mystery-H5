@@ -91,8 +91,8 @@
         <p class="e2-archive-notice">
           无限生物科技有限公司机密文件，请管理员注意保密工作，文件名称按照既有规则命名。
         </p>
-        <label class="e2-archive-label">
-          <span class="e2-sr-only">关键词搜索</span>
+        <div class="e2-archive-label">
+          <label for="fileKeywordInput" class="e2-sr-only">关键词搜索</label>
           <div class="e2-search-shell">
             <input
               id="fileKeywordInput"
@@ -105,10 +105,17 @@
               class="e2-search-input"
               aria-label="关键词搜索"
             />
+            <button
+              id="fileKeywordSearchButton"
+              type="button"
+              class="e2-search-button"
+            >
+              搜索
+            </button>
           </div>
-        </label>
+        </div>
         <div id="openedFilesSection" class="e2-archive-section">
-          <p class="e2-archive-heading">已打开文件：（可再次阅读）</p>
+          <p class="e2-archive-heading">已打开文件：</p>
           <ul id="openedFileList" class="e2-archive-list"></ul>
           <p id="openedFileListEmpty" class="e2-archive-muted">尚未打开任何文件预览。</p>
         </div>
@@ -133,14 +140,16 @@
       aria-label="文件预览"
     >
       <div class="e2-preview-panel">
-        <button
-          id="filePreviewClose"
-          type="button"
-          class="e2-preview-close"
-        >
-          关闭
-        </button>
-        <p id="filePreviewTitle" class="e2-preview-title"></p>
+        <div class="e2-preview-toolbar">
+          <p id="filePreviewTitle" class="e2-preview-title"></p>
+          <button
+            id="filePreviewClose"
+            type="button"
+            class="e2-preview-close"
+          >
+            关闭
+          </button>
+        </div>
         <img
           id="filePreviewImage"
           class="e2-preview-img hidden"
@@ -189,6 +198,7 @@
         var grantWait = document.getElementById("grantWait");
         var archiveLayer = document.getElementById("archiveLayer");
         var fileKeywordInput = document.getElementById("fileKeywordInput");
+        var fileKeywordSearchButton = document.getElementById("fileKeywordSearchButton");
         var collectedFileList = document.getElementById("collectedFileList");
         var fileListEmpty = document.getElementById("fileListEmpty");
         var filePreviewBackdrop = document.getElementById("filePreviewBackdrop");
@@ -252,15 +262,18 @@
               "org",
               "chart"
             ],
-            bodyText:
-              "【ADM-112306】公司组织架构图（内部 · 一级部门）\n\n" +
-              "公司本部\n" +
-              "├── 财务部（Finance Dept.） 负责人：王德全（工号 678341）\n" +
-              "├── 人事部（Admin）负责人：何蕊（工号  112306）\n" +
-              "├── 辅助生殖中心（Assisted Reproductive Center）负责人：张弛（工号120627）\n" +
-              "├── 生物材料研发中心（Bio-Material Lab） 负责人：余悦（工号316698）\n" +
-              "├── 物流运筹部（Logistics） 负责人：刘伟（工号 1336890）\n" +
-              "└── IT 服务（IT）负责人：赖全（工号 513890）\n\n"
+            bodyHtml:
+              '<section class="e2-org-chart" aria-label="公司组织架构图">' +
+              '<header class="e2-org-heading"><strong>公司组织架构图</strong><span>内部 · 一级部门</span></header>' +
+              '<div class="e2-org-root"><strong>公司本部</strong><span>HEADQUARTERS</span></div>' +
+              '<ul class="e2-org-branches">' +
+              '<li><article><strong>财务部</strong><span>Finance Department</span><p>负责人：王德全</p><small>工号 678341</small></article></li>' +
+              '<li><article><strong>人事部</strong><span>ADMinistration</span><p>负责人：何蕊</p><small>工号 112306</small></article></li>' +
+              '<li><article><strong>辅助生殖中心</strong><span>Assisted Reproduction Center</span><p>负责人：张弛</p><small>工号 120627</small></article></li>' +
+              '<li><article><strong>生物材料研发中心</strong><span>Bio-Materials</span><p>负责人：余悦</p><small>工号 316698</small></article></li>' +
+              '<li><article><strong>物流运筹部</strong><span>LOGistics</span><p>负责人：刘伟</p><small>工号 1336890</small></article></li>' +
+              '<li><article><strong>IT 服务</strong><span>Information Technology</span><p>负责人：赖全</p><small>工号 513890</small></article></li>' +
+              '</ul></section>'
           },
           {
             id: "arc-120627",
@@ -620,10 +633,10 @@
             filePreviewImage.onerror = null;
             filePreviewImage.removeAttribute("src");
             filePreviewImage.classList.add("hidden");
-            var bodyHtml =
-              window.ProseArticle && typeof ProseArticle.formatPlainTextToProseHtml === "function"
+            var bodyHtml = file.bodyHtml ||
+              (window.ProseArticle && typeof ProseArticle.formatPlainTextToProseHtml === "function"
                 ? ProseArticle.formatPlainTextToProseHtml(file.bodyText)
-                : "";
+                : "");
             filePreviewText.innerHTML = bodyHtml || "<p>（无预览内容）</p>";
             filePreviewText.classList.remove("hidden");
           }
@@ -765,6 +778,21 @@
         if (fileKeywordInput) {
           fileKeywordInput.addEventListener("input", function () {
             renderFileList();
+          });
+          fileKeywordInput.addEventListener("keydown", function (event) {
+            if (event.key === "Enter") {
+              event.preventDefault();
+              renderFileList();
+              fileKeywordInput.blur();
+            }
+          });
+        }
+        if (fileKeywordSearchButton) {
+          fileKeywordSearchButton.addEventListener("click", function () {
+            renderFileList();
+            if (fileKeywordInput) {
+              fileKeywordInput.blur();
+            }
           });
         }
         if (filePreviewClose) {

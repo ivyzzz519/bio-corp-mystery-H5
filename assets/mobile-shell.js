@@ -49,6 +49,21 @@
     }
   };
 
+  const safeStorageWrite = (key, value) => {
+    try {
+      localStorage.setItem(key, value);
+    } catch (error) {
+      // Keep navigation usable when storage is unavailable.
+    }
+  };
+
+  const latestClueKey = "oa_latest_clue_page";
+  const defaultClueHref = "./003-notice-lifeguard-training.html";
+  if (articlePageIds.has(pageId)) {
+    safeStorageWrite(latestClueKey, `./${fileName}`);
+  }
+  const latestClueHref = safeStorageRead(latestClueKey, defaultClueHref);
+
   const currentUser = safeStorageRead("oa_current_user", "linmin");
   const deskHref = currentUser === "linlan"
     ? "./007-desk-linlan.html"
@@ -113,7 +128,7 @@
     { key: "workbench", label: "工作台", icon: "⌂", href: deskHref },
     { key: "search", label: "搜索", icon: "⌕", href: "./search.html" },
     { key: "mailbox", label: "邮箱", icon: "✉", href: `./mailbox.html?view=${encodeURIComponent(mailboxView)}` },
-    { key: "clues", label: "线索", icon: "◈", href: "./003-notice-lifeguard-training.html" }
+    { key: "clues", label: "足迹", icon: "◈", href: latestClueHref }
   ];
 
   const createBottomNav = () => {

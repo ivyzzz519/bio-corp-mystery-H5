@@ -34,8 +34,9 @@ function bind007AuthMenu() {
   }
 
   const currentUserKey = "oa_current_user";
+  const isLoggedOut = localStorage.getItem(currentUserKey) === "logged_out";
   const authState = {
-    loggedIn: true
+    loggedIn: !isLoggedOut
   };
 
   const renderAuthState = () => {
@@ -63,6 +64,17 @@ function bind007AuthMenu() {
     accountMenu.classList.add("hidden");
   };
 
+  const positionAccountMenu = () => {
+    if (window.innerWidth >= 768) {
+      accountMenu.style.removeProperty("top");
+      accountMenu.style.removeProperty("right");
+      return;
+    }
+    const rect = accountButton.getBoundingClientRect();
+    accountMenu.style.top = `${Math.round(rect.bottom + 8)}px`;
+    accountMenu.style.right = `${Math.max(12, Math.round(window.innerWidth - rect.right))}px`;
+  };
+
   const openLoginModal = () => {
     loginFeedback.textContent = "";
     loginAccountInput.value = "";
@@ -77,7 +89,13 @@ function bind007AuthMenu() {
       openLoginModal();
       return;
     }
+    const willOpen = accountMenu.classList.contains("hidden");
+    if (willOpen) positionAccountMenu();
     accountMenu.classList.toggle("hidden");
+  });
+
+  window.addEventListener("resize", () => {
+    if (!accountMenu.classList.contains("hidden")) positionAccountMenu();
   });
 
   document.addEventListener("click", () => {
@@ -86,9 +104,11 @@ function bind007AuthMenu() {
 
   logoutButton.addEventListener("click", () => {
     authState.loggedIn = false;
-    localStorage.removeItem(currentUserKey);
-    renderAuthState();
+    localStorage.setItem(currentUserKey, "logged_out");
     closePanels();
+    window.location.href = window.GameProgressTracker
+      ? window.GameProgressTracker.resolveUrlWithStage("./001-oa-home.html")
+      : "./001-oa-home.html";
   });
 
   loginButton.addEventListener("click", () => {
@@ -131,10 +151,12 @@ function bind007AuthMenu() {
     loginFeedback.textContent = "账号或密码错误";
   });
 
-  if (window.OaWorkbenchNav) {
-    window.OaWorkbenchNav.persistDesk("linlan");
-  } else {
-    localStorage.setItem(currentUserKey, "linlan");
+  if (!isLoggedOut) {
+    if (window.OaWorkbenchNav) {
+      window.OaWorkbenchNav.persistDesk("linlan");
+    } else {
+      localStorage.setItem(currentUserKey, "linlan");
+    }
   }
   renderAuthState();
 }

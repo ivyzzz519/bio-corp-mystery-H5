@@ -1,5 +1,19 @@
 /* Page-specific mobile presentation for immersive scenes. */
 
+#truthRevealOverlay {
+  width: 100vw;
+  height: 100dvh;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 24px !important;
+}
+
+#truthRevealMessage {
+  width: 100%;
+  margin: 0 !important;
+  text-align: center;
+}
+
 html.mobile-h5.mobile-page-009 body {
   background:
     radial-gradient(circle at 14% 5%, rgba(59, 130, 246, 0.24), transparent 34%),

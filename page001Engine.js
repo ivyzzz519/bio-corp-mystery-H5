@@ -1,15 +1,19 @@
 function bind001Interactions() {
   const currentUserKey = "oa_current_user";
-  if (localStorage.getItem(currentUserKey) === "linlan") {
+  const storedUser = localStorage.getItem(currentUserKey);
+  const isLoggedOut = storedUser === "logged_out";
+  if (storedUser === "linlan") {
     window.location.href = window.GameProgressTracker
       ? window.GameProgressTracker.resolveUrlWithStage("./007-desk-linlan.html")
       : "./007-desk-linlan.html";
     return;
   }
-  if (window.OaWorkbenchNav) {
-    window.OaWorkbenchNav.persistDesk("linmin");
-  } else {
-    localStorage.setItem(currentUserKey, "linmin");
+  if (!isLoggedOut) {
+    if (window.OaWorkbenchNav) {
+      window.OaWorkbenchNav.persistDesk("linmin");
+    } else {
+      localStorage.setItem(currentUserKey, "linmin");
+    }
   }
 
   const accountButton = document.getElementById("accountButton");
@@ -49,13 +53,27 @@ function bind001Interactions() {
   const recoverFeedback = document.getElementById("recoverFeedback");
   const mailboxNavLink = document.getElementById("mailboxNavLink");
   const mailUnreadBadge = document.getElementById("mailUnreadBadge");
+  const dashboardBlocks = Array.from(document.querySelectorAll("main > header, main > section"));
+  const workbenchTopBar = document.querySelector("main > div:first-child");
+  const loggedOutPanel = document.createElement("section");
+  loggedOutPanel.id = "loggedOutPanel";
+  loggedOutPanel.className =
+    "hidden rounded-2xl border border-slate-200 bg-white px-6 py-10 text-center shadow-sm";
+  loggedOutPanel.innerHTML = `
+    <h2 class="text-xl font-bold text-slate-800">尚未登录</h2>
+    <p class="mt-2 text-sm text-slate-500">登录员工账号后查看对应工作台内容。</p>
+    <button id="loggedOutLoginButton" class="mt-5 rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-medium text-white" type="button">登录账号</button>
+  `;
+  if (workbenchTopBar) {
+    workbenchTopBar.insertAdjacentElement("afterend", loggedOutPanel);
+  }
 
   if (!accountButton || !accountMenu) {
     return;
   }
 
   const authState = {
-    loggedIn: true
+    loggedIn: !isLoggedOut
   };
 
   const readStateKey = "oa_mailbox_read";
@@ -69,6 +87,8 @@ function bind001Interactions() {
 
   const renderAuthState = () => {
     if (authState.loggedIn) {
+      dashboardBlocks.forEach((block) => block.classList.remove("hidden"));
+      loggedOutPanel.classList.add("hidden");
       accountAvatar.textContent = "林";
       accountAvatar.classList.remove("bg-slate-400");
       accountAvatar.classList.add("bg-blue-600");
@@ -84,12 +104,26 @@ function bind001Interactions() {
     accountAvatar.classList.add("bg-slate-400");
     accountName.textContent = "未登录";
     accountSubtitle.textContent = "点击登录";
+    dashboardBlocks.forEach((block) => block.classList.add("hidden"));
+    loggedOutPanel.classList.remove("hidden");
     logoutButton.classList.add("hidden");
     loginButton.classList.remove("hidden");
   };
 
   const closeAllPanels = () => {
     accountMenu.classList.add("hidden");
+  };
+
+  const positionAccountMenu = () => {
+    if (window.innerWidth >= 768) {
+      accountMenu.style.removeProperty("top");
+      accountMenu.style.removeProperty("right");
+      return;
+    }
+
+    const rect = accountButton.getBoundingClientRect();
+    accountMenu.style.top = `${Math.round(rect.bottom + 8)}px`;
+    accountMenu.style.right = `${Math.max(12, Math.round(window.innerWidth - rect.right))}px`;
   };
 
   const openLoginModal = () => {
@@ -107,7 +141,17 @@ function bind001Interactions() {
       openLoginModal();
       return;
     }
+    const willOpen = accountMenu.classList.contains("hidden");
+    if (willOpen) {
+      positionAccountMenu();
+    }
     accountMenu.classList.toggle("hidden");
+  });
+
+  window.addEventListener("resize", () => {
+    if (!accountMenu.classList.contains("hidden")) {
+      positionAccountMenu();
+    }
   });
 
   document.addEventListener("click", () => {
@@ -116,7 +160,7 @@ function bind001Interactions() {
 
   logoutButton.addEventListener("click", () => {
     authState.loggedIn = false;
-    localStorage.removeItem(currentUserKey);
+    localStorage.setItem(currentUserKey, "logged_out");
     renderAuthState();
     closeAllPanels();
   });
@@ -125,6 +169,11 @@ function bind001Interactions() {
     closeAllPanels();
     openLoginModal();
   });
+
+  const loggedOutLoginButton = document.getElementById("loggedOutLoginButton");
+  if (loggedOutLoginButton) {
+    loggedOutLoginButton.addEventListener("click", openLoginModal);
+  }
 
   recoverCloseButton.addEventListener("click", () => {
     recoverModal.classList.add("hidden");
@@ -170,6 +219,12 @@ function bind001Interactions() {
   loginSubmitButton.addEventListener("click", () => {
     const account = (loginAccountInput.value || "").trim();
     const password = (loginPasswordInput.value || "").trim();
+
+    if (account === "250812" && password === "LM@250812") {
+      localStorage.setItem(currentUserKey, "linmin");
+      window.location.reload();
+      return;
+    }
 
     if (account === "160423" && password === "1234Qwer") {
       localStorage.setItem(currentUserKey, "linlan");

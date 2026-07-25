@@ -36,7 +36,7 @@
   </head>
   <body class="min-h-screen bg-slate-950 text-slate-100">
     <main class="mx-auto max-w-3xl px-5 pb-16 pt-8 md:pt-10">
-      <section class="rounded-2xl border border-slate-700/90 bg-slate-900/80 p-6 shadow-2xl md:p-10">
+      <section id="quizPage" class="rounded-2xl border border-slate-700/90 bg-slate-900/80 p-6 shadow-2xl md:p-10">
         <p class="text-xs tracking-[0.35em] text-slate-500">AFTER ENDING · 02</p>
 
         <div id="introBlock" class="prose-article prose-article--dark prose-article--compact mt-6 min-h-[4rem]">
@@ -103,10 +103,14 @@
           </div>
         </div>
 
-        <button id="skipOutroButton" type="button" class="mt-8 hidden rounded-lg border border-slate-600 px-3 py-2 text-xs text-slate-300">
+      </section>
+
+      <section id="outroPage" class="hidden rounded-2xl border border-slate-700/90 bg-slate-900/80 p-6 shadow-2xl md:p-10">
+        <p class="text-xs tracking-[0.35em] text-slate-500">AFTER ENDING · 02</p>
+        <button id="skipOutroButton" type="button" class="mt-6 hidden rounded-lg border border-slate-600 px-3 py-2 text-xs text-slate-300">
           跳过文字动画
         </button>
-        <div id="outroBlock" class="prose-article prose-article--dark prose-article--compact mt-6 hidden border-t border-slate-700/80 pt-8"></div>
+        <div id="outroBlock" class="prose-article prose-article--dark prose-article--compact mt-6 hidden"></div>
       </section>
 
       <div class="mt-8 flex flex-wrap justify-center gap-3">
@@ -272,8 +276,17 @@
         }
 
         async function runOutro() {
+          var quizPage = document.getElementById("quizPage");
+          var outroPage = document.getElementById("outroPage");
           var wrap = document.getElementById("outroBlock");
           var skipButton = document.getElementById("skipOutroButton");
+          if (quizPage) quizPage.classList.add("hidden");
+          if (outroPage) outroPage.classList.remove("hidden");
+          try {
+            window.scrollTo({ top: 0, behavior: "auto" });
+          } catch (eScroll) {
+            window.scrollTo(0, 0);
+          }
           if (skipButton) skipButton.classList.remove("hidden");
           wrap.classList.remove("hidden");
           wrap.innerHTML = "";

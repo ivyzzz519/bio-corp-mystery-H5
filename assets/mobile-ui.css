@@ -284,6 +284,10 @@ html.mobile-h5 canvas {
     background: #fff;
   }
 
+  html.mobile-h5.mobile-route-workbench #accountMenu {
+    z-index: 130;
+  }
+
   html.mobile-h5.mobile-route-workbench main > header {
     position: relative;
     overflow: hidden;
@@ -412,6 +416,16 @@ html.mobile-h5 canvas {
   html.mobile-h5 body > section.fixed.inset-0 {
     align-items: flex-end !important;
     padding: 18px 0 0 !important;
+  }
+
+  html.mobile-h5 #loginModal,
+  html.mobile-h5 #recoverModal {
+    z-index: 140 !important;
+  }
+
+  html.mobile-h5 #loginModal:not(.hidden) ~ .mobile-bottom-nav,
+  html.mobile-h5 #recoverModal:not(.hidden) ~ .mobile-bottom-nav {
+    display: none !important;
   }
 
   html.mobile-h5.mobile-route-entry body > div {
