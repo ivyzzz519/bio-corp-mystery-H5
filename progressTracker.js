@@ -227,7 +227,7 @@
   }
 
   function getBaseBarWidth() {
-    const viewportWidth = Math.max(320, window.innerWidth || 0);
+    const viewportWidth = document.documentElement.clientWidth || window.innerWidth || 320;
     return Math.min(Math.floor(viewportWidth * BAR_VIEWPORT_RATIO), BAR_BASE_MAX_WIDTH);
   }
 
@@ -250,7 +250,7 @@
       return;
     }
     const baseWidth = getBaseBarWidth();
-    const viewportWidth = Math.max(320, window.innerWidth || 0);
+    const viewportWidth = document.documentElement.clientWidth || window.innerWidth || 320;
     const maxUsableWidth = Math.max(280, viewportWidth - BAR_EDGE_GAP * 2);
     const width = Math.min(baseWidth, maxUsableWidth);
     const left = Math.max(BAR_EDGE_GAP, Math.floor((viewportWidth - baseWidth) / 2));

@@ -26,3 +26,16 @@ Phase 5 includes both the shared mobile visual system and the page-specific puzz
 - Page-level hierarchy, copy density and puzzle-specific feedback.
 
 Ending 1 and the Ending 2 outro now provide a skip-animation control for mobile reading.
+
+## Final package QA — 2026-07-25
+
+Tested from the extracted `bio-corp-mystery-H5-v1.0.0.zip`, served as static files:
+
+- All 21 routes loaded at 320 x 568, 375 x 667, 390 x 844 and 430 x 932.
+- No horizontal overflow or visibly broken images remained at any tested viewport.
+- No browser console errors were reported during the final route pass.
+- Valid and invalid keyword searches returned the expected states.
+- The virtual B-09B flow passed: download, open tray, rename to `.zip`, extract and open the WAV transcript.
+- Ending 1, hidden archive authentication (failure and success), Ending 2 recap questions and skip-animation behavior passed.
+
+The 320 px pass exposed and resolved two scrollbar-related width issues in the shared mobile shell and progress bar. Physical-device verification was subsequently completed and accepted by the release owner.

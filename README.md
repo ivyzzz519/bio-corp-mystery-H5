@@ -10,7 +10,7 @@ This directory is the independent mobile H5 edition of the game.
 
 ## Local entry
 
-Open `index.html` through a local static web server. The final TapTap package will keep `index.html` at the project root.
+Open `index.html` through a local static web server. The final TapTap ZIP contains one top-level game folder, with `index.html` inside that folder.
 
 ## Packaging notes
 

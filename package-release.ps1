@@ -6,13 +6,17 @@ $ErrorActionPreference = "Stop"
 
 $projectRoot = [IO.Path]::GetFullPath($PSScriptRoot)
 $releaseRoot = [IO.Path]::GetFullPath($OutputDirectory)
-$commit = (git -C $projectRoot rev-parse --short HEAD 2>$null)
-if (-not $commit) {
-  $commit = "local"
+$version = (git -C $projectRoot describe --tags --exact-match HEAD 2>$null)
+if (-not $version) {
+  $version = (git -C $projectRoot rev-parse --short HEAD 2>$null)
+}
+if (-not $version) {
+  $version = "local"
 }
 
-$packageName = "bio-corp-mystery-H5-$commit"
+$packageName = "bio-corp-mystery-H5-$version"
 $stagePath = Join-Path $releaseRoot (".staging-" + $packageName)
+$packageRoot = Join-Path $stagePath $packageName
 $zipPath = Join-Path $releaseRoot ($packageName + ".zip")
 
 New-Item -ItemType Directory -Path $releaseRoot -Force | Out-Null
@@ -25,19 +29,19 @@ if (Test-Path -LiteralPath $zipPath) {
 }
 
 try {
-  New-Item -ItemType Directory -Path $stagePath | Out-Null
+  New-Item -ItemType Directory -Path $packageRoot | Out-Null
 
   Get-ChildItem -LiteralPath $projectRoot -File |
     Where-Object { $_.Extension -in ".html", ".js", ".css" } |
-    Copy-Item -Destination $stagePath
+    Copy-Item -Destination $packageRoot
 
-  $assetTarget = Join-Path $stagePath "assets"
+  $assetTarget = Join-Path $packageRoot "assets"
   New-Item -ItemType Directory -Path $assetTarget | Out-Null
   Get-ChildItem -LiteralPath (Join-Path $projectRoot "assets") -File |
     Where-Object { $_.Name -notin "preflight.vendor.css", "tw_colors.js" } |
     Copy-Item -Destination $assetTarget
 
-  $imageTarget = Join-Path $stagePath "images"
+  $imageTarget = Join-Path $packageRoot "images"
   New-Item -ItemType Directory -Path $imageTarget | Out-Null
   @(
     "news1.png",
@@ -48,20 +52,50 @@ try {
     Copy-Item -LiteralPath (Join-Path $projectRoot "images\$_") -Destination $imageTarget
   }
 
-  Copy-Item -LiteralPath (Join-Path $projectRoot "media") -Destination $stagePath -Recurse
+  Copy-Item -LiteralPath (Join-Path $projectRoot "media") -Destination $packageRoot -Recurse
 
-  if (-not (Test-Path -LiteralPath (Join-Path $stagePath "index.html"))) {
+  if (-not (Test-Path -LiteralPath (Join-Path $packageRoot "index.html"))) {
     throw "Package entry index.html is missing."
   }
 
-  Compress-Archive -Path (Join-Path $stagePath "*") -DestinationPath $zipPath -CompressionLevel Optimal
-
   Add-Type -AssemblyName System.IO.Compression.FileSystem
+  Add-Type -AssemblyName System.IO.Compression
+  $zipStream = [IO.File]::Open($zipPath, [IO.FileMode]::CreateNew)
+  try {
+    $outputArchive = [IO.Compression.ZipArchive]::new(
+      $zipStream,
+      [IO.Compression.ZipArchiveMode]::Create,
+      $false
+    )
+    try {
+      Get-ChildItem -LiteralPath $packageRoot -File -Recurse | ForEach-Object {
+        $relativePath = $_.FullName.Substring($stagePath.Length + 1).Replace("\", "/")
+        [IO.Compression.ZipFileExtensions]::CreateEntryFromFile(
+          $outputArchive,
+          $_.FullName,
+          $relativePath,
+          [IO.Compression.CompressionLevel]::Optimal
+        ) | Out-Null
+      }
+    } finally {
+      $outputArchive.Dispose()
+    }
+  } finally {
+    $zipStream.Dispose()
+  }
+
   $archive = [IO.Compression.ZipFile]::OpenRead($zipPath)
   try {
-    $hasRootIndex = @($archive.Entries | Where-Object { $_.FullName -eq "index.html" }).Count -eq 1
-    if (-not $hasRootIndex) {
-      throw "Package validation failed: index.html is not at the ZIP root."
+    $expectedIndex = "$packageName/index.html"
+    $topLevelItems = @($archive.Entries | ForEach-Object {
+      ($_.FullName -split "/")[0]
+    } | Sort-Object -Unique)
+    $hasNestedIndex = @($archive.Entries | Where-Object { $_.FullName -eq $expectedIndex }).Count -eq 1
+    if ($topLevelItems.Count -ne 1 -or $topLevelItems[0] -ne $packageName) {
+      throw "Package validation failed: ZIP must contain exactly one top-level folder named $packageName."
+    }
+    if (-not $hasNestedIndex) {
+      throw "Package validation failed: index.html is missing from $packageName."
     }
   } finally {
     $archive.Dispose()
@@ -79,4 +113,3 @@ try {
     Remove-Item -LiteralPath $stagePath -Recurse -Force
   }
 }
-
