@@ -927,6 +927,43 @@ body {
   text-align: right;
 }
 
+@media (max-width: 699px) {
+  .e2-org-branches article {
+    grid-template-areas:
+      "department department"
+      "english english"
+      "owner employee";
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.3rem 0.75rem;
+    padding: 0.75rem;
+  }
+
+  .e2-org-branches strong {
+    grid-area: department;
+    overflow-wrap: normal;
+    word-break: keep-all;
+  }
+
+  .e2-org-branches span {
+    grid-area: english;
+    text-align: left;
+    overflow-wrap: anywhere;
+    word-break: normal;
+  }
+
+  .e2-org-branches p {
+    grid-area: owner;
+    min-width: 0;
+    overflow-wrap: normal;
+    word-break: keep-all;
+  }
+
+  .e2-org-branches small {
+    grid-area: employee;
+    white-space: nowrap;
+  }
+}
+
 @media (min-width: 700px) {
   .e2-org-root {
     margin-bottom: 2rem;
