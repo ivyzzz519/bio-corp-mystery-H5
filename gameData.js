@@ -83,7 +83,7 @@ const gameData = {
         },
         {
           type: "image",
-          imageSrc: "./images/news1.png",
+          imageSrc: "./images/news1-ai-labeled.png",
           alt: "无限生物科技有限公司调研组在湖山县高新工业园参观",
           caption: "调研组在<strong>湖山县</strong>高新工业园实地调研"
         },
@@ -177,7 +177,7 @@ const gameData = {
         },
         {
           type: "image",
-          imageSrc: "./images/news_changgao_visit.png",
+          imageSrc: "./images/news_changgao_visit-ai-labeled.png",
           alt: "常高市长一行在无限生物科技有限公司调研合影",
           caption: "陈文（最左）、常高（中间）、周照（最右）"
         },
