@@ -1,2 +1,3 @@
 release/
 .tools/
+.pnpm-store/
