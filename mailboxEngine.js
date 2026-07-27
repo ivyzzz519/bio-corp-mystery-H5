@@ -68,7 +68,7 @@ function bindMailboxPage() {
   const linminMailMap = {
     "hr-onboard": {
       title: "🛡️【入职指引】欢迎加入巨象万维，即将开启无限生物驻场服务",
-      meta: "发件人：巨象万维 - 人事部 hr@giant-web.com | 收件时间：2026年05月11日 09:00",
+      meta: "发件人：巨象万维 - 人事部 hr@giant-web.com | 收件时间：2026年04月20日 09:00",
       body: [
         "亲爱的林敏（工号：250812）：",
         "欢迎加入 巨象万维（Giant Web）。",

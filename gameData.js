@@ -83,7 +83,7 @@ const gameData = {
         },
         {
           type: "image",
-          imageSrc: "./images/news1-ai-labeled.png",
+          imageSrc: "./images/news1.png",
           alt: "无限生物科技有限公司调研组在湖山县高新工业园参观",
           caption: "调研组在<strong>湖山县</strong>高新工业园实地调研"
         },
@@ -102,8 +102,8 @@ const gameData = {
       ]
     },
     "003": {
-      title: "《关于开展第一届员工水上救生知识培训的通知》",
-      source: "",
+      title: "关于开展第一届员工水上救生知识培训的通知",
+      source: "【行政人事部】",
       blocks: [
         {
           type: "paragraph",
@@ -159,11 +159,15 @@ const gameData = {
         },
         {
           type: "paragraph",
-          text: "我司重要战略合作伙伴、核心股东——巨象科技（创始人兼 CEO <strong>李宏辉</strong>先生及其随行专家团）将于下月（2025年5月）莅临我司湖山县研发中心及生产基地进行实地调研。"
+          text: "我司重要战略合作伙伴、核心股东——巨象科技（创始人兼 CEO <strong>李宏辉</strong>先生及其随行专家团）将于下月（2026年5月）莅临我司湖山县研发中心及生产基地进行实地调研。"
         },
         {
           type: "paragraph",
-          text: "巨象科技作为我司数字化底层架构的唯一供应商，此次调研旨在评估\"生命数据安全堡垒\"二期工程的进展，请各部门拟定汇报材料，于本周三（2026年4月15日）汇总至总经办。"
+          text: "巨象科技作为我司数字化底层架构的唯一供应商，此次调研旨在评估\"生命数据安全堡垒\"二期工程的进展，请各部门拟定汇报材料，于本周三（2026年4月29日）汇总至总经办。"
+        },
+        {
+          type: "signature",
+          text: "无限生物科技有限公司总经办"
         }
       ]
     },
@@ -177,7 +181,7 @@ const gameData = {
         },
         {
           type: "image",
-          imageSrc: "./images/news_changgao_visit-ai-labeled.png",
+          imageSrc: "./images/news_changgao_visit.png",
           alt: "常高市长一行在无限生物科技有限公司调研合影",
           caption: "陈文（最左）、常高（中间）、周照（最右）"
         },
@@ -217,7 +221,7 @@ const gameData = {
       results: [
         {
           id: "p003",
-          title: "《关于开展第一届员工水上救生知识培训的通知》",
+          title: "关于开展第一届员工水上救生知识培训的通知",
           summary: "员工活动公告详情页",
           targetPage: "./003-notice-lifeguard-training.html",
           unlockNewPage: false,

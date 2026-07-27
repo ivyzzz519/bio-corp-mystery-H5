@@ -35,23 +35,23 @@ try {
   $assetTarget = Join-Path $packageRoot "assets"
   New-Item -ItemType Directory -Path $assetTarget | Out-Null
   Get-ChildItem -LiteralPath (Join-Path $projectRoot "assets") -File |
-    Where-Object { $_.Name -notin "preflight.vendor.css", "tw_colors.js", "vip-list.png" } |
+    Where-Object { $_.Name -notin "preflight.vendor.css", "tw_colors.js", "vip-list-ai-labeled.png" } |
     Copy-Item -Destination $assetTarget
 
   $imageTarget = Join-Path $packageRoot "images"
   New-Item -ItemType Directory -Path $imageTarget | Out-Null
   @(
-    "news1-ai-labeled.png",
-    "news3-ai-labeled.png",
-    "news4-ai-labeled.png",
-    "news_changgao_visit-ai-labeled.png"
+    "news1.png",
+    "news3.png",
+    "news4.png",
+    "news_changgao_visit.png"
   ) | ForEach-Object {
     Copy-Item -LiteralPath (Join-Path $projectRoot "images\$_") -Destination $imageTarget
   }
 
   $mediaTarget = Join-Path $packageRoot "media"
   New-Item -ItemType Directory -Path $mediaTarget | Out-Null
-  Copy-Item -LiteralPath (Join-Path $projectRoot "media\cwb-112304-ai-labeled.png") -Destination $mediaTarget
+  Copy-Item -LiteralPath (Join-Path $projectRoot "media\cwb-112304.png") -Destination $mediaTarget
 
   if (-not (Test-Path -LiteralPath (Join-Path $packageRoot "index.html"))) {
     throw "Package entry index.html is missing."
