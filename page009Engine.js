@@ -59,13 +59,14 @@ function bindPage009() {
 
     if (account === "linlanlinmin" && password === "QWTR10002") {
       localStorage.setItem("oa_current_user", "linlan");
+      sessionStorage.setItem("oa_workbench_desk", "linlan");
       loginFeedback.classList.remove("text-rose-600");
       loginFeedback.classList.add("text-emerald-600");
       loginFeedback.textContent = "登录成功，正在跳转...";
       setTimeout(() => {
         window.location.href = window.GameProgressTracker
-          ? window.GameProgressTracker.resolveUrlWithStage("./010-notes-linlan.html")
-          : "./010-notes-linlan.html";
+          ? window.GameProgressTracker.resolveUrlWithStage("./010-notes-linlan.html?desk=linlan")
+          : "./010-notes-linlan.html?desk=linlan";
       }, 500);
       return;
     }

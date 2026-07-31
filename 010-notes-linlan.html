@@ -396,7 +396,8 @@
         }
       });
 
-      diaryCount.textContent = diaries.length + " 篇笔记";
+      diaryCount.textContent =
+        diaries.length + " 篇普通笔记 · " + lockedDiaries.length + " 篇加密笔记";
       renderDiaryList("");
       showDiary(diaries.find((d) => d.title === activeDiaryTitle) || diaries[0]);
     </script>

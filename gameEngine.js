@@ -21,14 +21,28 @@ function setSearch404Overlay(show, message) {
       el = document.createElement("div");
       el.id = "search404Overlay";
       el.className =
-        "hidden fixed inset-0 z-[9999] flex items-center justify-center bg-black px-6 text-center font-mono text-lg text-white sm:text-xl";
-      el.setAttribute("role", "status");
+        "hidden fixed inset-0 z-[9999] flex items-center justify-center bg-black px-6 text-center text-white";
+      el.setAttribute("role", "alertdialog");
+      el.setAttribute("aria-modal", "true");
+      el.setAttribute("aria-labelledby", "search404Message");
+      el.innerHTML = `
+        <div class="flex max-w-sm flex-col items-center gap-5">
+          <p id="search404Message" class="font-mono text-lg sm:text-xl"></p>
+          <button type="button" class="rounded-lg border border-white/40 px-5 py-2 text-sm font-medium text-white hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white">
+            返回搜索
+          </button>
+        </div>
+      `;
+      el.querySelector("button").addEventListener("click", () => {
+        setSearch404Overlay(false);
+      });
       host.appendChild(el);
     }
-    el.textContent = message || "404 NOT FOUND";
+    el.querySelector("#search404Message").textContent = message || "404 NOT FOUND";
     el.classList.remove("hidden");
     document.documentElement.classList.add("overflow-hidden");
     host.classList.add("overflow-hidden");
+    el.querySelector("button").focus();
   } else {
     if (el) {
       el.classList.add("hidden");
